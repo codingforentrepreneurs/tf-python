@@ -3,8 +3,10 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-ENV_MESSAGE = os.environ.get("ENV_MESSAGE") or "Nothing to report"
+def get_env_message():
+    return os.environ.get("ENV_MESSAGE") or "Nothing to report"
+
 
 @app.get("/")
 def home_view():
-    return  {"hello": "world", "cron": "smooth-cronjob", "watchtower": "working", "env-message": ENV_MESSAGE}
+    return  {"hello": "world", "cron": "smooth-cronjob", "watchtower": "working", "env-message": get_env_message()}
