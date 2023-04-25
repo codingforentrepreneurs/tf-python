@@ -1,0 +1,28 @@
+name: Apply Kubectl
+on: 
+  workflow_dispatch:
+
+jobs:
+  apply_k8s:
+    name: Verify K8s Service Account
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: azure/setup-kubectl@v3
+      - name: Create/Verify `.kube` directory
+        run: mkdir -p ~/.kube/
+      - name: Create kubectl config
+        run: |
+          cat << EOF >> ~/.kube/kubeconfig.yaml
+          ${{ secrets.KUBECONFIG }}
+          EOF
+      - name: Apply Kubernetes Config
+        run: |
+          KUBECONFIG=~/.kube/kubeconfig.yaml kubectl apply -f ops/
+      - name: Echo deployments
+        run: |
+          KUBECONFIG=~/.kube/kubeconfig.yaml kubectl get deployments
+      - name: Echo Services
+        run: |
+          KUBECONFIG=~/.kube/kubeconfig.yaml kubectl get services

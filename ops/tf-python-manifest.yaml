@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tf-python
+spec:
+    replicas: 3
+    selector:
+        matchLabels:
+            app: tf-python
+    template:
+        metadata:
+            labels:
+                app: tf-python
+        spec:
+            containers:
+            - name: tf-python
+              image: jmitchel3/tf-python:latest
+              ports:
+                - containerPort: 8080
+              env:
+                - name: PORT
+                  value: "8080"
+                - name: ENV_MESSAGE
+                  value: "Hello from Kubernetes"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-python
+spec:
+    type: LoadBalancer
+    ports:
+        - port: 80
+          targetPort: 8080
+          protocol: TCP
+    selector:
+        app: tf-python
