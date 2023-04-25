@@ -6,7 +6,7 @@ import requests
 
 def test_gunicorn_start():
     gunicorn_process = subprocess.Popen(
-        ["gunicorn", "-w", "1", "main:app", "-b", "127.0.0.1:8000"]
+        ["gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "main:app", "-b", "127.0.0.1:8000"]
     )
     time.sleep(2)  # Give Gunicorn some time to start
 
