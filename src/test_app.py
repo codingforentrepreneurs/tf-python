@@ -22,8 +22,10 @@ def test_home_view():
 def clear_env_message(monkeypatch):
     monkeypatch.delenv("ENV_MESSAGE", raising=False)
 
-def test_env_message_set():
-    os.environ["ENV_MESSAGE"] = "Test message"
+    
+def test_env_message_set(monkeypatch):
+    monkeypatch.setenv("ENV_MESSAGE", "Test message")
     response = client.get("/")
     assert response.status_code == 200
     assert response.json()["env-message"] == "Test message"
+
