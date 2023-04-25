@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 # Assuming your FastAPI code is in a file named `main.py`
-from .main import app, ENV_MESSAGE
+from .main import app, get_env_message
 
 client = TestClient(app)
 
@@ -15,7 +15,7 @@ def test_home_view():
         "hello": "world",
         "cron": "smooth-cronjob",
         "watchtower": "working",
-        "env-message": ENV_MESSAGE,
+        "env-message": get_env_message(),
     }
 
 @pytest.fixture(autouse=True)
