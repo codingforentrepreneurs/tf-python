@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 # Assuming your FastAPI code is in a file named `main.py`
-from main import app, ENV_MESSAGE
+from .main import app, ENV_MESSAGE
 
 client = TestClient(app)
 
