@@ -24,6 +24,6 @@ jobs:
             -t jmitchel3/tf-python:latest \
             -t jmitchel3/f-python:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
             .
-       - name: Push container
-         run: |
+      - name: Push container
+        run: |
            docker push jmitchel3/tf-python --all-tags
