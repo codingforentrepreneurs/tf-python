@@ -18,6 +18,7 @@ def test_gunicorn_start():
             "cron": "smooth-cronjob",
             "watchtower": "working",
             "env-message": os.environ.get("ENV_MESSAGE") or "Nothing to report",
+            "secret-message": os.environ.get("SECRET_MESSAGE") or "Nothing lurking"
         }
     finally:
         gunicorn_process.terminate()
