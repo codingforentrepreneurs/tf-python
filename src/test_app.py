@@ -21,23 +21,16 @@ def test_home_view():
 
 @pytest.fixture(autouse=True)
 def clear_env_message(monkeypatch):
+    monkeypatch.delenv("SECRET_MESSAGE", raising=False)
     monkeypatch.delenv("ENV_MESSAGE", raising=False)
 
     
-def test_env_message_set(monkeypatch):
+def test_messages_set(monkeypatch):
     monkeypatch.setenv("ENV_MESSAGE", "Test message")
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json()["env-message"] == "Test message"
-
-
-@pytest.fixture(autouse=True)
-def clear_secret_message(monkeypatch):
-    monkeypatch.delenv("SECRET_MESSAGE", raising=False)
-
-    
-def test_secret_message_set(monkeypatch):
     monkeypatch.setenv("SECRET_MESSAGE", "Test secret message")
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json()["secret-message"] == "Test secret message"
+    data = response.json()
+    assert data["env-message"] == "Test message"
+    assert data["secret-message"] == "Test secret message"
+    
