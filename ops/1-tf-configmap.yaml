@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tf-python-cm
+data:
+  ENV_MESSAGE: This is a configmap!
+  MG: abc 
