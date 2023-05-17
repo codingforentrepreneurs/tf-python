@@ -17,16 +17,16 @@ jobs:
           cat << EOF >> ~/.kube/kubeconfig.yaml
           ${{ secrets.KUBECONFIG }}
           EOF
-      - name: Add Secret
-        run: |
-          cat << EOF >> ops/0-tf-secret.yaml
-          apiVersion: v1
-          kind: Secret
-          metadata:
-            name: tf-python-secret
-          stringData:
-            SECRET_MESSAGE: ${{ secrets.ENV_SECRET_MESSAGE }}
-          EOF
+      # - name: Add Secret
+      #   run: |
+      #     cat << EOF >> ops/0-tf-secret.yaml
+      #     apiVersion: v1
+      #     kind: Secret
+      #     metadata:
+      #       name: tf-python-secret
+      #     stringData:
+      #       SECRET_MESSAGE: ${{ secrets.ENV_SECRET_MESSAGE }}
+      #     EOF
       - name: Apply Kubernetes Config
         run: |
           KUBECONFIG=~/.kube/kubeconfig.yaml kubectl apply -f ops/
