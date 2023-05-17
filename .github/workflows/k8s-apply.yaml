@@ -20,6 +20,9 @@ jobs:
       - name: Apply Kubernetes Config
         run: |
           KUBECONFIG=~/.kube/kubeconfig.yaml kubectl apply -f ops/
+      - name: Rollout tf-python
+        run: |
+          KUBECONFIG=~/.kube/kubeconfig.yaml kubectl rollout restart deployment/tf-python
       - name: Echo deployments
         run: |
           KUBECONFIG=~/.kube/kubeconfig.yaml kubectl get deployments
