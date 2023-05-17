@@ -1,6 +1,6 @@
 infra/backend
 infra/terraform.tfvars
-
+.kube/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
