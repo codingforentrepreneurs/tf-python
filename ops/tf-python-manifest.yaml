@@ -23,7 +23,7 @@ spec:
                 - name: ENV_MESSAGE
                   value: "Hello from Kubernetes"
                 - name: SECRET_MESSAGE
-                  value: "This isn't really secret"
+                  value: "Secret"
 
 ---
 apiVersion: v1
