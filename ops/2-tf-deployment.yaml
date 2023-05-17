@@ -31,7 +31,7 @@ spec:
                       name: tf-python-secret
                       key: SECRET_MESSAGE
               envFrom:
-                - configMapKeyRef:
+                - configMapRef:
                   name: tf-python-cm
 
 
