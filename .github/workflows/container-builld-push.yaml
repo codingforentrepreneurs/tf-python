@@ -22,7 +22,7 @@ jobs:
         run: |
           docker build -f Dockerfile \
             -t jmitchel3/tf-python:latest \
-            -t jmitchel3/f-python:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
+            -t jmitchel3/tf-python:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
             .
       - name: Push container
         run: |
