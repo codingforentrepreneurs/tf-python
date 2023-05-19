@@ -24,7 +24,7 @@ jobs:
           fi
           cat << EOF >> ops/0-tf-secret.json
           {
-            "apiVersion": v1,
+            "apiVersion": "v1",
             "kind": "Secret",
             "metadata": {
               "name": "tf-python-secret"
