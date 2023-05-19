@@ -1,4 +1,4 @@
-name: Destory Infrastructure via Terraform
+name: Destroy Infrastructure via Terraform
 on: 
   workflow_dispatch:
   # push: 
