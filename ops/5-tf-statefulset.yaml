@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: tf-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tf-python
+  template:
+    metadata:
+      labels:
+        app: tf-python
+    spec:
+      containers:
+      - name: tf-python
+        image: jmitchel3/tf-python:latest
+        ports:
+          - containerPort: 8080
+        env:
+          - name: PORT
+            value: "8080"
+          - name: ENV_MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: tf-python-cm
+                key: ENV_MESSAGE
+          - name: SECRET_MESSAGE
+            valueFrom:
+              secretKeyRef:
+                name: tf-python-secret
+                key: SECRET_MESSAGE
+        volumeMounts:
+        - name: tf-volume
+          mountPath: /data
+      # initContainers:
+      #   - name: delete-existing-data
+      #     image: alpine:latest
+      #     command: ["sh", "-c", "rm -rf /mnt/*"]
+      #     volumeMounts:
+      #       - name: tf-volume
+      #         mountPath: /mnt
+  volumeClaimTemplates:
+    - metadata:
+        name: tf-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: linode-block-storage
