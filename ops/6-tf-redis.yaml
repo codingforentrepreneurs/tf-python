@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-statefulset
+  labels:
+    app: redis-statefulset
+spec:
+  replicas: 1
+  # serviceName: redis-service
+  selector:
+    matchLabels:
+      app: redis-statefulset
+  template:
+    metadata:
+      labels:
+        app: redis-statefulset
+    spec:
+      containers:
+      - name: redis-container
+        image: redis:latest
+        imagePullPolicy: IfNotPresent
+        command:
+          - redis-server
+        ports:
+          - name: redis-port
+            containerPort: 6379
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+      initContainers:
+        - name: delete-existing-data
+          image: alpine:latest
+          command: ["sh", "-c", "rm -rf /mnt/*"]
+          volumeMounts:
+            - name: redis-data
+              mountPath: /mnt
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Gi
+        storageClassName: linode-block-storage
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-db
+  labels:
+    app: redis-db
+spec:
+  type: ClusterIP # 
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: redis-port
+  selector:
+    app: redis-statefulset
+
+# redis://redis-db.default.svc.cluster.local:6379
