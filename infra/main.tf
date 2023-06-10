@@ -24,7 +24,7 @@ resource "linode_lke_cluster" "terraform_k8s" {
     region="us-east"
     tags=["tf-k8s"]
     pool {
-        type  = "g6-standard-1"
+        type  = "g6-standard-2"
         count = 3
     }
 }
