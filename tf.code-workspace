@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.autoSave": "afterDelay",
+		"terminal.integrated.env.osx": {
+            "KUBECONFIG": "${workspaceFolder}/.kube/kubeconfig.yaml",
+			"KUBE_EDITOR": "nano",
+        },
+        "terminal.integrated.env.windows": {
+            "KUBECONFIG": "${workspaceFolder}\\.kube\\kubeconfig.yaml"
+        },
+        "terminal.integrated.env.linux": {
+            "KUBECONFIG": "${workspaceFolder}/.kube/kubeconfig.yaml"
+        },
+	}
+}
