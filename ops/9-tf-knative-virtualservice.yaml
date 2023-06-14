@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: tf-python-root
+  namespace: apps
+spec:
+  gateways:
+    - knative-shared-gateway.knative-serving.svc.cluster.local
+    - knative-serving/knative-ingress-gateway
+  hosts:
+    - pythonkeras.com
+    - www.pythonkeras.com
+  http:
+    - name: http-route
+      match:
+        - uri:
+            prefix: "/" # http://tf-python.apps.pythonkeras.com/
+      rewrite:
+        authority: tf-python.apps.pythonkeras.com
+      route:
+        - destination:
+            host: tf-python.apps.svc.cluster.local
+            port:
+              number: 80
+          weight: 100

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: tf-python
+  namespace: demo # tf-python.demo.svc.cluster.local # tf-python.demo.pythonkeras.com
+spec:
+  template:
+    spec:
+      containers:
+        - name: cfe-nginx-c
+          image: codingforentrepreneurs/cfe-nginx:latest
+          ports:
+            - containerPort: 80

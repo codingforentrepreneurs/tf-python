@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apps
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tf-python-cm
+  namespace: apps
+data:
+  ENV_MESSAGE: This is a configmap!
+  MG: abc 
+  NEW_ONE: abc
+
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: tf-python
+  namespace: apps # tf-python.apps.svc.cluster.local
+spec:
+  template:
+    spec:
+      containers:
+        - name: tf-py-container
+          image: jmitchel3/tf-python:latest
+          ports:
+            - containerPort: 8080
+          env:
+              - name: VERSION
+                value: "1.0.1"
+              - name: ENV_MESSAGE
+                valueFrom:
+                  configMapKeyRef:
+                    name: tf-python-cm
+                    key: ENV_MESSAGE
+          # securityContext:
+          #     allowPrivilegeEscalation: false
+          #     runAsNonRoot: false
+          #     capabilities:
+          #       drop:
+          #       - ALL
+          #     seccompProfile:
+          #       type: RuntimeDefault
+
